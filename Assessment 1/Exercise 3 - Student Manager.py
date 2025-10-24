@@ -117,15 +117,13 @@ def totalMarks(student):
 
 # Sort highest first going down
 def sortDescending():
-    studentsCopy = studentData.copy()  # Make copy to preserve original
-    studentsCopy.sort(key=totalMarks, reverse=True)  # Sort descending
-    displayStudentsList(studentsCopy)  # Display sorted list
+    studentData.sort(key=totalMarks, reverse=True)  # Sort descending
+    displayStudentsList(studentData)  # Display sorted list
 
 # Sort lowest first going up
 def sortAscending():
-    studentsCopy = studentData.copy() 
-    studentsCopy.sort(key=totalMarks)  # Sort ascending
-    displayStudentsList(studentsCopy) 
+    studentData.sort(key=totalMarks)  # Sort ascending
+    displayStudentsList(studentData) 
 
 # Tkinter stuff
 title = Label(window, text="Student Manager", bg='#282828', fg='white', font=("Helvetica", 20, "bold"))
@@ -150,11 +148,11 @@ lowest = Button(window, text="View Lowest Score", font=("Helvetica", 10, "bold")
 lowest.place(relx=0.8, rely=0.3, anchor=CENTER)
 
 # Sort all with highest first
-ascending = Button(window, text="Sort by Highest", font=("Helvetica", 10, "bold"), relief=RAISED, bd=1, command=sortAscending)
+ascending = Button(window, text="Ascending", font=("Helvetica", 10, "bold"), relief=RAISED, bd=1, command=sortAscending)
 ascending.place(relx=0.2, rely=0.2, anchor=CENTER)
 
 # Sort all with lowest first
-descending = Button(window, text="Sort by Lowest", font=("Helvetica", 10, "bold"), relief=RAISED, bd=1, command=sortDescending)
+descending = Button(window, text="Descending", font=("Helvetica", 10, "bold"), relief=RAISED, bd=1, command=sortDescending)
 descending.place(relx=0.8, rely=0.2, anchor=CENTER)
 
 # Scrollable frame to display student info. I thank customtkinter for this.
@@ -166,3 +164,9 @@ window.geometry('750x500')
 window.resizable(0, 0)
 window.config(bg='#282828')
 window.mainloop()
+
+
+"""
+Use of AI has been used in this code. It mainly focused on the for loop aspect in functions (Not in the read file text), which I would reuse in the other functions.
+Prompt: How can I write a Python for loop that goes through and reads text file of student data (student code, name, coursework marks, exam mark) and outputs formatted information for each student?
+"""
