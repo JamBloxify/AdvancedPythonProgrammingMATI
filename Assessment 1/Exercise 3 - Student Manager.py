@@ -169,5 +169,7 @@ window.mainloop()
 """
 Use of AI has been used in this code. It mainly focused on the for loop aspect in functions, which I would reuse in the other functions.
 Prompt: How can I write a Python for loop that goes through and reads text file of student data (student code, name, coursework marks, exam mark) and outputs formatted information for each student?
+ChatGPT
 """
+
 
