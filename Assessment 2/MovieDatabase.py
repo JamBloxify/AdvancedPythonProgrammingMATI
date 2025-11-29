@@ -11,7 +11,7 @@ window = Tk()
 
 # --- Movie Class ---
 class MovieApp:
-    def __init__(self, api):
+    def __init__(self, api): # Initialize the class with API
         self.api = api
         self.baseURL = "https://api.themoviedb.org/3"
         self.headers = {
@@ -19,14 +19,14 @@ class MovieApp:
             "accept": "application/json"
         }
 
-    def getMovies(self, category):
+    def getMovies(self, category): # Get movies based on category
         url = f"{self.baseURL}/movie/{category}?language=en-US&page=1"
         data = requests.get(url, headers=self.headers).json()
         return data["results"]
 
-    def formatMovie(self, rawMovie):
+    def formatMovie(self, rawMovie): # Format movie data into a dictionary
         return {
-            "id": rawMovie.get("id"),
+            "Id": rawMovie.get("id"),
             "Title": rawMovie.get("title"),
             "Poster": rawMovie.get("poster_path"),
             "Overview": rawMovie.get("overview"),
@@ -34,7 +34,7 @@ class MovieApp:
         }
 
     
-    def getRandomMovie(self):
+    def getRandomMovie(self): # Get a random movie
         page = random.randint(1, 500)
         url = f"{self.baseURL}/discover/movie?page={page}&language=en-US&sort_by=popularity.desc"
         
@@ -82,24 +82,25 @@ def makeMovieCard(movie): # Movie card GUI to avoid repetition
     descLabel = customtkinter.CTkLabel(infoFrame, text=overview, text_color='white', font=('Arial', 12), wraplength=260, justify="left")
     descLabel.pack(anchor="w")
 
-    trailerBtn = customtkinter.CTkButton(infoFrame, text='Watch Trailer', fg_color=("#4dccbd"), hover_color=("#6df8e8"), text_color='black', font=('Arial', 12, 'bold'), command=lambda m_id=movie.get("id"): openTrailer(m_id))
+    trailerBtn = customtkinter.CTkButton(infoFrame, text='Watch Trailer', fg_color=("#4dccbd"), hover_color=("#6df8e8"), text_color='black', font=('Arial', 12, 'bold'), command=lambda movieId=movie.get("Id"): openTrailer(movieId))
     trailerBtn.pack(pady=5, anchor="w")
 
-    infoBtn = customtkinter.CTkButton(infoFrame, text='More Info', fg_color=("#4dccbd"), hover_color=("#6df8e8"), text_color='black', font=('Arial', 12, 'bold'), command=lambda m_id=movie.get("id"): openMoreInfo(m_id))
+    infoBtn = customtkinter.CTkButton(infoFrame, text='More Info', fg_color=("#4dccbd"), hover_color=("#6df8e8"), text_color='black', font=('Arial', 12, 'bold'), command=lambda movieId=movie.get("Id"): openMoreInfo(movieId))
     infoBtn.pack(pady=5, anchor="w")
 
 def clearFrame(): # Clear main frame for new content
     for widget in frame.winfo_children():
         widget.destroy()
 
-CATEGORY = { # Mapping for categories in combo box to avoid errors
+
+def valueChange(category): # Handles the combo box values
+    CATEGORY = { # Mapping for categories in combo box to avoid errors
     "Popular": "popular",
     "Top Rated": "top_rated",
     "Now Playing": "now_playing",
     "Upcoming": "upcoming"
-}
+    }
 
-def valueChange(category): # Handles the combo box values
     if category == "Filter by...": # Ignores default value
         return
 
@@ -147,7 +148,7 @@ def showRandomMovie(): # Displays a random movie
 
 def openTrailer(movie_id):
     if not movie_id:
-        messagebox.showinfo("No Trailer", "Movie ID missing.")
+        messagebox.showwarning("No Trailer", "Movie ID missing.")
         return
 
     url = f"{app.baseURL}/movie/{movie_id}/videos?language=en-US"
@@ -160,7 +161,7 @@ def openTrailer(movie_id):
             webbrowser.open(trailerURL)
             return
 
-    messagebox.showinfo("No Trailer", "No trailer available for this movie.")
+    messagebox.showwarning("No Trailer", "No trailer available for this movie.")
 
 def openMoreInfo(movie_id):
     url = f"https://www.themoviedb.org/movie/{movie_id}"
